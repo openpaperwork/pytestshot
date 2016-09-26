@@ -7,7 +7,7 @@ gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk
 
-import testshot
+import pytestshot
 
 
 class GtkWinInstance(object):
@@ -27,10 +27,10 @@ class GtkWinInstance(object):
         Gtk.main()
 
     def stop(self):
-        testshot.wait()
+        pytestshot.wait()
         self.window.destroy()
-        testshot.wait()
-        testshot.exit()
+        pytestshot.wait()
+        pytestshot.exit()
         self.thread.join()
 
 
@@ -41,7 +41,7 @@ class TestBasicWin(unittest.TestCase):
     def test_screenshot(self):
         self.app.start()
         try:
-            pil_img = testshot.screenshot(self.app.window.get_window())
+            pil_img = pytestshot.screenshot(self.app.window.get_window())
             self.assertNotEqual(pil_img, None)
         finally:
             self.app.stop()
@@ -49,8 +49,8 @@ class TestBasicWin(unittest.TestCase):
     def test_ref(self):
         self.app.start()
         try:
-            pil_img = testshot.screenshot(self.app.window.get_window())
+            pil_img = pytestshot.screenshot(self.app.window.get_window())
             self.assertNotEqual(pil_img, None)
         finally:
             self.app.stop()
-        testshot.assertScreenshot(self, "test_basic", pil_img)
+        pytestshot.assertScreenshot(self, "test_basic", pil_img)

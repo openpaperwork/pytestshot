@@ -4,7 +4,7 @@ from setuptools import setup
 
 
 setup(
-    name="testshot",
+    name="pytestshot",
     version="0.1",
     description=(
         "Automated tests for Python/GTK using screenshots and image processing"
@@ -13,8 +13,8 @@ setup(
         "Automated tests for Python/GTK using screenshots and image processing"
     ),
     keywords="tests",
-    url="https://github.com/jflesch/testshot#readme",
-    download_url=("https://github.com/jflesch/testshot/archive/master.tar.gz"),
+    url="https://github.com/jflesch/pytestshot#readme",
+    download_url=("https://github.com/jflesch/pytestshot/archive/master.tar.gz"),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: End Users/Desktop",
@@ -29,10 +29,10 @@ setup(
     author="Jerome Flesch",
     author_email="jflesch@gmail.com",
     packages=[
-        'testshot',
+        'pytestshot',
     ],
     package_dir={
-        'testshot': 'src/testshot',
+        'pytestshot': 'src/pytestshot',
     },
     scripts=[],
     install_requires=[
