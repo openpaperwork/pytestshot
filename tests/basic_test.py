@@ -37,15 +37,20 @@ class GtkWinInstance(object):
 class TestBasicWin(unittest.TestCase):
     def setUp(self):
         self.app = GtkWinInstance()
-        self.app.start()
 
     def test_screenshot(self):
-        testshot.wait()
-        pil_img = testshot.screenshot(self.app.window.get_window())
-        self.assertNotEqual(pil_img, None)
+        self.app.start()
+        try:
+            pil_img = testshot.screenshot(self.app.window.get_window())
+            self.assertNotEqual(pil_img, None)
+        finally:
+            self.app.stop()
 
     def test_ref(self):
-        testshot.assertWindow(self, "test_basic", self.app.window.get_window())
-
-    def tearDown(self):
-        self.app.stop()
+        self.app.start()
+        try:
+            pil_img = testshot.screenshot(self.app.window.get_window())
+            self.assertNotEqual(pil_img, None)
+        finally:
+            self.app.stop()
+        testshot.assertScreenshot(self, "test_basic", pil_img)

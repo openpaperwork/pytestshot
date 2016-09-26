@@ -28,13 +28,6 @@ def pixbuf2image(pb):
     )
 
 
-def screenshot(gdk_window):
-    pb = Gdk.pixbuf_get_from_window(
-        gdk_window, 0, 0, gdk_window.get_width(), gdk_window.get_height()
-    )
-    return pixbuf2image(pb)
-
-
 class GtkWait(object):
     def __init__(self):
         self.condition = threading.Condition()
@@ -60,15 +53,20 @@ def wait():
     GtkWait().wait()
 
 
+def screenshot(gdk_window):
+    wait()
+    pb = Gdk.pixbuf_get_from_window(
+        gdk_window, 0, 0, gdk_window.get_width(), gdk_window.get_height()
+    )
+    return pixbuf2image(pb)
+
+
 def exit():
     wait()
     Gtk.main_quit()
 
 
-def assertWindow(test_inst, test_name, gdk_window, focus_on_text=True):
-    wait()
-    orig_img = screenshot(gdk_window)
-
+def assertScreenshot(test_inst, test_name, orig_img, focus_on_text=True):
     out_img = orig_img
     if focus_on_text:
         out_img = out_img.resize(
