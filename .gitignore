@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 *~
+*_orig.png
+*_diff_png
+*_out.png
+
 
 # C extensions
 *.so
