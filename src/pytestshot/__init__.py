@@ -107,10 +107,11 @@ def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=False):
     ref_img = PIL.Image.open(os.path.join(TESTS_DATA_DIR, ref_filename))
     real_ref_img = ref_img
 
+    has_diff = False
+    real_diff_img = None
+    diff_swt_img = None
     if ref_img.size != out_img.size:
         has_diff = True
-        real_diff_img = None
-        diff_swt_img = None
     else:
         if focus_on_text:
             ref_img = _swt(ref_img)
