@@ -87,7 +87,7 @@ def _swt(pil_img):
     return pil_img
 
 
-def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=True):
+def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=False):
     out_img = real_out_img
 
     if focus_on_text:
