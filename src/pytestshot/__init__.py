@@ -74,34 +74,57 @@ def exit():
     Gtk.main_quit()
 
 
-def assertScreenshot(test_inst, test_name, orig_img, focus_on_text=True):
-    out_img = orig_img
+def _swt(pil_img):
+    pil_img = pil_img.resize(
+        (pil_img.size[0] * 4, pil_img.size[1] * 4),
+        PIL.Image.ANTIALIAS
+    )
+    pil_img = pillowfight.swt(pil_img, pillowfight.SWT_OUTPUT_BW_TEXT)
+    pil_img = pil_img.resize(
+        (int(pil_img.size[0] / 4), int(pil_img.size[1] / 4)),
+        PIL.Image.ANTIALIAS
+    )
+    return pil_img
+
+
+def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=True):
+    out_img = real_out_img
+
     if focus_on_text:
-        out_img = out_img.resize(
-            (out_img.size[0] * 4, out_img.size[1] * 4),
-            PIL.Image.ANTIALIAS
-        )
-        out_img = pillowfight.swt(out_img, pillowfight.SWT_OUTPUT_BW_TEXT)
-        out_img = out_img.resize(
-            (int(out_img.size[0] / 4), int(out_img.size[1] / 4)),
-            PIL.Image.ANTIALIAS
-        )
+        out_img = _swt(out_img)
 
     ref_filename = "{}_ref.png".format(test_name)
     out_filename = "{}_out.png".format(test_name)
-    orig_filename = "{}_orig.png".format(test_name)
-    diff_filename = "{}_diff.png".format(test_name)
+    real_diff_filename = "{}_diff.png".format(test_name)
+    diff_swt_filename = "{}_diff_txt.png".format(test_name)
 
     if not os.path.exists(os.path.join(TESTS_DATA_DIR, ref_filename)):
-        out_img.save(os.path.join(TESTS_DATA_DIR, out_filename))
-        orig_img.save(os.path.join(TESTS_DATA_DIR, orig_filename))
-    assert(os.path.exists(os.path.join(TESTS_DATA_DIR, ref_filename)))
-    ref_img = PIL.Image.open(os.path.join(TESTS_DATA_DIR, ref_filename))
+        real_out_img.save(os.path.join(TESTS_DATA_DIR, out_filename))
+    test_inst.assertTrue(
+        (os.path.exists(os.path.join(TESTS_DATA_DIR, ref_filename)))
+    )
 
-    (has_diff, diff_img) = pillowfight.diff(out_img, ref_img)
+    ref_img = PIL.Image.open(os.path.join(TESTS_DATA_DIR, ref_filename))
+    real_ref_img = ref_img
+
+    if ref_img.size != out_img.size:
+        has_diff = True
+        real_diff_img = None
+        diff_swt_img = None
+    else:
+        if focus_on_text:
+            ref_img = _swt(ref_img)
+            (has_diff, diff_swt_img) = pillowfight.diff(out_img, ref_img)
+        else:
+            (has_diff, real_diff_img) = pillowfight.diff(out_img, ref_img)
+
     if has_diff:
-        orig_img.save(os.path.join(TESTS_DATA_DIR, orig_filename))
-        out_img.save(os.path.join(TESTS_DATA_DIR, out_filename))
-        diff_img.save(os.path.join(TESTS_DATA_DIR, diff_filename))
+        real_out_img.save(os.path.join(TESTS_DATA_DIR, out_filename))
+        if diff_swt_img:
+            diff_swt_img.save(os.path.join(TESTS_DATA_DIR, diff_swt_filename))
+            (_, real_diff_img) = pillowfight.diff(real_out_img, real_ref_img)
+            real_diff_img.save(os.path.join(TESTS_DATA_DIR, real_diff_filename))
+        elif real_diff_img:
+            real_diff_img.save(os.path.join(TESTS_DATA_DIR, real_diff_filename))
 
     test_inst.assertFalse(has_diff)
