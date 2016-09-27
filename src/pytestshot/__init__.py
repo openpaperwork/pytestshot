@@ -24,8 +24,12 @@ TESTS_DATA_DIR = os.getenv(
 
 def pixbuf2image(pb):
     (width, height) = (pb.get_width(), pb.get_height())
+    pixels = pb.get_pixels()
+    colors = "RGB"
+    if (width * height * 4 == len(pixels)):
+        colors = "RGBA"
     return PIL.Image.frombytes(
-        "RGB",
+        colors,
         (width, height),
         pb.get_pixels()
     )
