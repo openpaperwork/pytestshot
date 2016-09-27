@@ -13,6 +13,9 @@ from gi.repository import GLib
 from gi.repository import Gtk
 
 
+GLib.threads_init()
+
+
 TESTS_DATA_DIR = os.getenv(
     'TESTS_DATA_DIR',
     os.path.join('tests', 'screenshots')
@@ -63,6 +66,7 @@ def screenshot(gdk_window):
 
 def exit():
     wait()
+    GLib.idle_add(Gtk.main_quit)
     Gtk.main_quit()
 
 

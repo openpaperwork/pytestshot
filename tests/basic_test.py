@@ -28,7 +28,7 @@ class GtkWinInstance(object):
 
     def stop(self):
         pytestshot.wait()
-        self.window.destroy()
+        self.window.hide()
         pytestshot.wait()
         pytestshot.exit()
         self.thread.join()
