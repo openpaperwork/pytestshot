@@ -96,8 +96,6 @@ def _img_to_bl(img_in):
 def _make_diff(img_in, img_in2):
     img_in = _img_to_bl(img_in)
     img_in2 = _img_to_bl(img_in2)
-    img_in.save("pouet.png")
-    img_in2.save("pouet2.png")
 
     img_out = pillowfight.compare(img_in, img_in2, tolerance=20)
     return img_out
