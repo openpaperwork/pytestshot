@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
 import os
+os.environ['LANG'] = 'C'
+os.environ['GTK_THEME'] = 'HighContrast'
+os.environ['GDK_RENDERING'] = 'image'
+
 import time
 import threading
 
