@@ -127,17 +127,17 @@ class Comparator(object):
         )
         self.refresh_imgs()
 
-    def __goto_next(self, _):
+    def __goto_next(self, _=None):
         self.imgs_idx += 1
         self.refresh_imgs()
 
-    def __goto_previous(self, _):
+    def __goto_previous(self, _=None):
         self.imgs_idx -= 1
         if self.imgs_idx < 0:
             self.imgs_idx = 0
         self.refresh_imgs()
 
-    def __apply(self, _):
+    def __apply(self, _=None):
         imgs = self.imgs[self.imgs_idx]
         try:
             os.unlink(imgs[1])
@@ -148,7 +148,7 @@ class Comparator(object):
         except FileNotFoundError:
             pass
         os.rename(imgs[0], imgs[1])
-        self.refresh_imgs()
+        self.__goto_next()
 
     def refresh_imgs(self):
         if self.imgs_idx >= len(self.imgs):
@@ -175,7 +175,6 @@ class Comparator(object):
                 "insert-image",
                 Gtk.IconSize.DIALOG
             )
-
 
     def run(self):
         Gtk.main()
