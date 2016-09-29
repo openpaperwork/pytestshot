@@ -87,6 +87,23 @@ def _swt(pil_img):
     return pil_img
 
 
+def _img_to_bl(img_in):
+    img_out = img_in.convert('L')
+    img_out = img_out.point(lambda x: 0 if x < 128 else 255, '1')
+    return img_out
+
+
+def _make_diff(img_in, img_in2):
+    img_in = pillowfight.gaussian(img_in)
+    img_in2 = pillowfight.gaussian(img_in2)
+
+    img_in = _img_to_bl(img_in)
+    img_in2 = _img_to_bl(img_in2)
+
+    img_out = pillowfight.compare(img_in, img_in2, tolerance=20)
+    return img_out
+
+
 def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=False):
     out_img = real_out_img
 
@@ -115,15 +132,15 @@ def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=False):
     else:
         if focus_on_text:
             ref_img = _swt(ref_img)
-            (has_diff, diff_swt_img) = pillowfight.compare(out_img, ref_img)
+            (has_diff, diff_swt_img) = _make_diff(out_img, ref_img)
         else:
-            (has_diff, real_diff_img) = pillowfight.compare(out_img, ref_img)
+            (has_diff, real_diff_img) = _make_diff(out_img, ref_img)
 
     if has_diff:
         real_out_img.save(os.path.join(TESTS_DATA_DIR, out_filename))
         if diff_swt_img:
             diff_swt_img.save(os.path.join(TESTS_DATA_DIR, diff_swt_filename))
-            (_, real_diff_img) = pillowfight.compare(real_out_img, real_ref_img)
+            (_, real_diff_img) = _make_diff(real_out_img, real_ref_img)
             real_diff_img.save(os.path.join(TESTS_DATA_DIR, real_diff_filename))
         elif real_diff_img:
             real_diff_img.save(os.path.join(TESTS_DATA_DIR, real_diff_filename))
