@@ -96,8 +96,9 @@ def _swt(pil_img):
 
 
 def _make_diff(img_in, img_in2):
-    img_out = pillowfight.compare(img_in, img_in2, tolerance=64)
-    return img_out
+    (nb_pixels, img_diff) = pillowfight.compare(img_in, img_in2, tolerance=64)
+    has_diff = True if nb_pixels > 10 else False
+    return (has_diff, img_diff)
 
 
 def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=False):
