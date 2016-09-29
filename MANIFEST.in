@@ -1,0 +1,3 @@
+recursive-include src *.py *.glade *.xml *.css
+include *.markdown
+include COPYING

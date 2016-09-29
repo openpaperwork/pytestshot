@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+
 from setuptools import setup
 
 
@@ -14,7 +17,9 @@ setup(
     ),
     keywords="tests",
     url="https://github.com/jflesch/pytestshot#readme",
-    download_url=("https://github.com/jflesch/pytestshot/archive/master.tar.gz"),
+    download_url=(
+        "https://github.com/jflesch/pytestshot/archive/master.tar.gz"
+    ),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: End Users/Desktop",
@@ -30,11 +35,21 @@ setup(
     author_email="jflesch@gmail.com",
     packages=[
         'pytestshot',
+        'pytestshot_compare',
     ],
     package_dir={
         'pytestshot': 'src/pytestshot',
+        'pytestshot_compare': 'src/pytestshot_compare',
     },
-    scripts=[],
+    scripts=['scripts/pytestshot-compare'],
+    data_files=[
+        (
+            os.path.join(sys.prefix, 'share/pytestshot'),
+            [
+                'src/pytestshot_compare/pytestshot-compare.glade',
+            ],
+        )
+    ],
     install_requires=[
         "Pillow",
         "pypillowfight",

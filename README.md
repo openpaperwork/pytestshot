@@ -94,7 +94,7 @@ rename ```[test_name]_out.png``` into ```[test_name]_ref.png```,
 and next time, the test will pass.
 
 
-## Obvious problems
+## An obvious problem
 
 Obviously, the main problem is to always get the same screenshots, every
 single time, on every computers.
@@ -102,7 +102,6 @@ single time, on every computers.
 The simplest solution is to define a reference test system.
 
 For instance, for Paperwork, the reference test sytem is:
-* a Virtual Machine in VirtualBox (2d and 3d acceleration disabled)
 * GNU/Linux Debian stable
 * Gnome 3
 
@@ -112,3 +111,14 @@ test with:
 * No index (XDG_DATA_HOME points to a clean empty directory)
 * A clearly defined set of documents in the work directory
 * A clearly defined window size (part of Paperwork's config file)
+
+
+## pytestshot-compare
+
+Unfortunately, even then, it seems impossible to get screenshots that
+match perfectly a reference.
+
+Therefore, Pytestshot provides a small tool called "pytestshot-compare".
+It can be called from command line. It allows to compare manually
+and quickly the screenshots. It also allows renaming quickly
+"xxx_out.png" into "xxx_ref.png" if the user wants it.
