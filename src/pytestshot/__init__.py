@@ -115,15 +115,15 @@ def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=False):
     else:
         if focus_on_text:
             ref_img = _swt(ref_img)
-            (has_diff, diff_swt_img) = pillowfight.diff(out_img, ref_img)
+            (has_diff, diff_swt_img) = pillowfight.compare(out_img, ref_img)
         else:
-            (has_diff, real_diff_img) = pillowfight.diff(out_img, ref_img)
+            (has_diff, real_diff_img) = pillowfight.compare(out_img, ref_img)
 
     if has_diff:
         real_out_img.save(os.path.join(TESTS_DATA_DIR, out_filename))
         if diff_swt_img:
             diff_swt_img.save(os.path.join(TESTS_DATA_DIR, diff_swt_filename))
-            (_, real_diff_img) = pillowfight.diff(real_out_img, real_ref_img)
+            (_, real_diff_img) = pillowfight.compare(real_out_img, real_ref_img)
             real_diff_img.save(os.path.join(TESTS_DATA_DIR, real_diff_filename))
         elif real_diff_img:
             real_diff_img.save(os.path.join(TESTS_DATA_DIR, real_diff_filename))
