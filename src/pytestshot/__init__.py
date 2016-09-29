@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import time
 import threading
 
 import PIL.Image
@@ -62,6 +63,7 @@ def wait():
 
 def screenshot(gdk_window):
     wait()
+    time.sleep(0.5)
     pb = Gdk.pixbuf_get_from_window(
         gdk_window, 0, 0, gdk_window.get_width(), gdk_window.get_height()
     )
@@ -87,17 +89,8 @@ def _swt(pil_img):
     return pil_img
 
 
-def _img_to_bl(img_in):
-    img_out = img_in.convert('L')
-    img_out = img_out.point(lambda x: 0 if x < 128 else 255, '1')
-    return img_out
-
-
 def _make_diff(img_in, img_in2):
-    img_in = _img_to_bl(img_in)
-    img_in2 = _img_to_bl(img_in2)
-
-    img_out = pillowfight.compare(img_in, img_in2, tolerance=20)
+    img_out = pillowfight.compare(img_in, img_in2, tolerance=64)
     return img_out
 
 
