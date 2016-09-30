@@ -156,6 +156,7 @@ class Comparator(object):
             return
         imgs = self.imgs[self.imgs_idx]
 
+        self.main_win.set_title(os.path.basename(imgs[0]))
         self.img_out.set_from_file(imgs[0])
 
         if imgs[1] and os.path.exists(imgs[1]):
