@@ -78,7 +78,7 @@ It takes 3 argument:
 
 Comparison is done using the method ```pillowfight.compare(tolerance=64)```
 
-Example: [Input 1](https://raw.githubusercontent.com/jflesch/libpillowfight/master/tests/data/black_border_problem.jpg) + [Input 2](https://raw.githubusercontent.com/jflesch/libpillowfight/master/tests/data/black_border_problem_blackfilter.jpg) => [Output](https://raw.githubusercontent.com/jflesch/libpillowfight/master/tests/data/black_border_problem_diff.jpg))
+Example: [Input 1](https://raw.githubusercontent.com/jflesch/libpillowfight/master/tests/data/black_border_problem.jpg) + [Input 2](https://raw.githubusercontent.com/jflesch/libpillowfight/master/tests/data/black_border_problem_blackfilter.jpg) => [Output](https://raw.githubusercontent.com/jflesch/libpillowfight/master/tests/data/black_border_problem_diff.jpg)
 
 If the comparison fails, 2 extra files are created. One show
 the actual screenshot, and the other is the difference between
