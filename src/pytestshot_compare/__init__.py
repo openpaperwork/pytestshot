@@ -159,6 +159,12 @@ class Comparator(object):
         self.main_win.set_title(os.path.basename(imgs[0]))
         self.img_out.set_from_file(imgs[0])
 
+        if not os.path.exists(imgs[1]):
+            print("Warning: No output image {}".format(imgs[1]))
+        if not os.path.exists(imgs[2]):
+            print("Warning: No diff image {}"
+                  " (sizes may have been different)".format(imgs[2]))
+
         if imgs[1] and os.path.exists(imgs[1]):
             self.img_ref.set_from_file(imgs[1])
         else:

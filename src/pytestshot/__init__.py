@@ -124,14 +124,14 @@ def assertScreenshot(test_inst, test_name, real_out_img, focus_on_text=False):
     has_diff = False
     real_diff_img = None
     diff_swt_img = None
+    if focus_on_text:
+        ref_img = _swt(ref_img)
+        (has_diff, diff_swt_img) = _make_diff(out_img, ref_img)
+    else:
+        (has_diff, real_diff_img) = _make_diff(out_img, ref_img)
+
     if ref_img.size != out_img.size:
         has_diff = True
-    else:
-        if focus_on_text:
-            ref_img = _swt(ref_img)
-            (has_diff, diff_swt_img) = _make_diff(out_img, ref_img)
-        else:
-            (has_diff, real_diff_img) = _make_diff(out_img, ref_img)
 
     if has_diff:
         real_out_img.save(os.path.join(TESTS_DATA_DIR, out_filename))
