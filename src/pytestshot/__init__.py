@@ -80,8 +80,6 @@ def screenshot(gdk_window):
 
 def exit():
     wait()
-    GLib.idle_add(Gtk.main_quit)
-    Gtk.main_quit()
 
 
 def _swt(pil_img):
