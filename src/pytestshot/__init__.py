@@ -20,8 +20,9 @@ from gi.repository import GObject
 from gi.repository import Gtk
 
 
-GLib.threads_init()
-GObject.threads_init()
+if GLib.glib_version < (3, 10):
+    GLib.threads_init()
+    GObject.threads_init()
 
 
 TESTS_DATA_DIR = os.getenv(

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 echo "Initializing test environment ..."
 . ./env
 
