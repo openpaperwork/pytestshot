@@ -13,7 +13,7 @@ import pytestshot
 class GtkWinInstance(object):
     def start(self):
         self.window = Gtk.Window()
-        self.button = Gtk.Button("pouet")
+        self.button = Gtk.Button.new_with_label("pouet")
         self.window.add(self.button)
         self.window.show_all()
         self.window.set_size_request(640, 480)
